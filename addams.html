@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Which Addams Family Character Are You?</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #1e1e1e;
+      color: #f4f4f4;
+      text-align: center;
+      padding: 30px;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #2b2b2b;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    .options button {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 15px;
+      margin: 10px;
+      width: 90%;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .options button:hover {
+      background: #666;
+    }
+    #result {
+      font-size: 1.3rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Which Addams Family Character Are You?</h1>
+  <div id="quiz">
+    <!-- Quiz content will be injected here -->
+  </div>
+  <div id="result"></div>
+</div>
+
+<script>
+  const questions = [
+    {
+      text: "1. What’s your vibe in a group setting?",
+      answers: {
+        A: "Mysterious but observant",
+        B: "Loud, energetic, full of life",
+        C: "Calm, elegant, and in control",
+        D: "Goofy and unpredictable"
+      }
+    },
+    {
+      text: "2. What’s your idea of a perfect day?",
+      answers: {
+        A: "Reading in a quiet corner or planning world domination",
+        B: "Going on an adventure or inventing something wild",
+        C: "Hosting a candlelit dinner with family",
+        D: "Doing something weird just to see people’s reactions"
+      }
+    },
+    {
+      text: "3. How do you deal with problems?",
+      answers: {
+        A: "With quiet cleverness and emotional distance",
+        B: "With dramatic flair and excitement",
+        C: "With patience, charm, and subtle power",
+        D: "With jokes and chaos"
+      }
+    },
+    {
+      text: "4. What’s your hidden talent?",
+      answers: {
+        A: "Sarcasm",
+        B: "Sword fighting or fencing",
+        C: "Knowing everything before it happens",
+        D: "Being the life (or death) of the party"
+      }
+    }
+  ];
+
+  let currentQuestion = 0;
+  const score = { A: 0, B: 0, C: 0, D: 0 };
+
+  function showQuestion() {
+    if (currentQuestion < questions.length) {
+      const q = questions[currentQuestion];
+      const quizDiv = document.getElementById("quiz");
+      quizDiv.innerHTML = `
+        <div class="question">${q.text}</div>
+        <div class="options">
+          ${Object.entries(q.answers).map(([key, val]) =>
+            `<button onclick="selectAnswer('${key}')">${key}. ${val}</button>`
+          ).join('')}
+        </div>
+      `;
+    } else {
+      showResult();
+    }
+  }
+
+  function selectAnswer(letter) {
+    score[letter]++;
+    currentQuestion++;
+    showQuestion();
+  }
+
+  function showResult() {
+    const maxLetter = Object.keys(score).reduce((a, b) => score[a] > score[b] ? a : b);
+    const resultMap = {
+      A: "🖤 You’re Wednesday Addams!<br>Smart, deadpan, and unapologetically yourself.",
+      B: "❤️ You’re Gomez Addams!<br>Passionate, fun-loving, and full of excitement.",
+      C: "🌹 You’re Morticia Addams!<br>Graceful, wise, and spooky elegant.",
+      D: "⚡ You’re Uncle Fester!<br>Quirky, hilarious, and full of surprises."
+    };
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("result").innerHTML = resultMap[maxLetter];
+  }
+
+  showQuestion();
+</script>
+
+</body>
+</html>
